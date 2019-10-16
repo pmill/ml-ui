@@ -1,0 +1,142 @@
+<ul class="breadcrumbs">
+    <li>Subscribers</li>
+</ul>
+
+<h1>Subscribers</h1>
+
+<nav class="page-tools">
+    <a
+        class="btn btn-md btn-primary"
+        [routerLink]="['/account', 'subscribers', 'create']"
+    >
+        <i class="fa fa-plus"></i>
+        Add Subscriber
+    </a>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <form *ngIf="state.dataLoaded">
+            <div class="form-group row">
+                <label
+                    for="subscriberGroup"
+                    class="col-12 col-sm-3 col-form-label"
+                >
+                    Filter by Group
+                </label>
+
+                <div class="col-12 col-sm-9">
+                    <select
+                        [(ngModel)]="model.filters.subscriberGroup"
+                        id="subscriberGroup"
+                        name="subscriberGroup"
+                        class="form-control"
+                        (change)="onFilterChange()"
+                    >
+                        <option [ngValue]="null">All Groups</option>
+                        <option
+                            *ngFor="let subscriberGroup of data.subscriberGroups"
+                            [ngValue]="subscriberGroup.id">
+                            {{ subscriberGroup.name }}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <ng-container *ngIf="!state.dataLoaded || !state.pageContentsLoaded">
+            <p class="text-center">
+                Loading...
+            </p>
+        </ng-container>
+
+        <ng-container *ngIf="state.pageContentsLoaded">
+            <ng-container *ngIf="data.subscribers.length > 0">
+                <div class="grid-table">
+                    <div class="grid-table-head bg-primary">
+                        <div class="row">
+                            <div class="col">
+                                Name
+                            </div>
+
+                            <div class="col">
+                                Email
+                            </div>
+
+                            <div class="col">
+                                Group
+                            </div>
+
+                            <div class="col">
+                                Status
+                            </div>
+
+                            <div class="col-1 text-right">
+                                <div class="icon-group icon-group-sm">
+                                    <i
+                                        class="fas fa-eye"
+                                        ngbTooltip="View Group"
+                                        container="body"
+                                    ></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-table-body" style="overflow:auto;">
+                        <div
+                            *ngFor="let subscriber of data.subscribers"
+                            class="row"
+                        >
+                            <div class="col">
+                                {{subscriber.name}}
+                            </div>
+
+                            <div class="col">
+                                {{subscriber.email}}
+                            </div>
+
+                            <div class="col">
+                                {{data.subscriberGroupIdMap[subscriber.subscriberGroupId].name}}
+                            </div>
+
+                            <div class="col">
+                                {{data.subscriberStateIdMap[subscriber.subscriberStateId].name}}
+                            </div>
+
+                            <div class="col-1 text-right">
+                                <div class="btn-group btn-group-round btn-group-sm">
+                                    <a
+                                        class="btn btn-info btn-sm btn-round"
+                                        [routerLink]="['/account', 'subscribers', subscriber.id]"
+                                        ngbTooltip="View Subscriber"
+                                        container="body">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="data.subscribers.length === 0">
+                <div class="text-center mt-5 mb-5">
+                    <ng-container *ngIf="!state.filtered">
+                        <p>
+                            <i class="fas fa-user fa-6x"></i>
+                        </p>
+                        <h3 class="mb-4">You've not added any subscribers.</h3>
+                    </ng-container>
+
+                    <ng-container *ngIf="state.filtered">
+                        <p>
+                            <i class="fas fa-user fa-6x"></i>
+                        </p>
+                        <h3 class="mb-4">No subscribers found with your applied filter.</h3>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

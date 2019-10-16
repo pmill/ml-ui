@@ -1,0 +1,102 @@
+<ul class="breadcrumbs">
+    <li><a [routerLink]="['/account/subscribers']">Subscribers</a></li>
+    <li>Add Subscriber</li>
+</ul>
+
+<ng-container *ngIf="!state.dataLoaded">
+    <p class="text-center">
+        Loading...
+    </p>
+</ng-container>
+
+<ng-container *ngIf="state.dataLoaded">
+    <h1>Add Subscriber</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form
+                #form="ngForm"
+                (submit)="createSubscriber()"
+            >
+                <div
+                    class="form-group row"
+                    [showErrors]="subscriberGroupField"
+                >
+                    <label
+                        for="subscriberGroup"
+                        class="col-12 col-sm-3 col-form-label"
+                    >
+                        Group
+                    </label>
+
+                    <div class="col-12 col-sm-9">
+                        <select
+                            [(ngModel)]="model.subscriberGroup"
+                            #subscriberGroupField="ngModel"
+                            id="subscriberGroup"
+                            name="subscriberGroup"
+                            class="form-control"
+                            required
+                        >
+                            <option [ngValue]="null">Select a group...</option>
+                            <option
+                                *ngFor="let subscriberGroup of data.subscriberGroups"
+                                [ngValue]="subscriberGroup">
+                                {{ subscriberGroup.name }}
+                            </option>
+                        </select>
+
+                        <error-messages></error-messages>
+                    </div>
+                </div>
+
+                <div
+                    class="form-group row"
+                    [showErrors]="subscriberFieldField"
+                    *ngFor="let field of data.fields"
+                >
+                    <label
+                        [for]="field.variable"
+                        class="col-12 col-sm-3 col-form-label"
+                    >
+                        {{field.title}}
+                    </label>
+
+                    <div class="col-12 col-sm-9">
+                        <input
+                            #subscriberFieldField="ngModel"
+                            [(ngModel)]="model.fields[field.variable]"
+                            [id]="field.variable"
+                            [name]="field.variable"
+                            [type]="field.fieldType.inputType"
+                            [required]="field.required"
+                            maxlength="255"
+                            class="form-control"
+                        >
+
+                        <error-messages></error-messages>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <a
+                        [routerLink]="['/account', 'subscribers']"
+                        class="mr-2"
+                    >
+                        Cancel
+                    </a>
+
+                    or
+
+                    <button
+                        type="submit"
+                        class="btn btn-lg btn-success ml-2"
+                        [disabled]="!form.valid || state.submitting"
+                    >
+                        Add Subscriber
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

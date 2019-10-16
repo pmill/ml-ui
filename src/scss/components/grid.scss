@@ -1,0 +1,229 @@
+@import "../variables";
+
+@import "../../../node_modules/bootstrap/scss/variables";
+
+@import "functions";
+
+/*
+ * Table layout using the Bootstrap grid. This is mostly to allow us to use overflow-y on the body, since that
+ * unfortunately doesn't work on tbody
+ */
+
+.grid-table {
+    margin-bottom: spacers(3);
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .grid-table-head {
+        @each $color, $value in $theme-colors {
+            &.bg-#{$color} {
+                color: color-yiq(theme-color($color));
+
+                .icon-group i {
+                    color: $gray-300;
+                }
+            }
+        }
+
+        i[ngbtooltip] {
+            padding-top: 10px;
+            margin-top: -10px;
+        }
+    }
+
+    .grid-table-body {
+        background: $white;
+
+        &:not(.grid-table-body-expandable) {
+            overflow-y: scroll;
+        }
+    }
+
+    .grid-table-head,
+    .grid-table-body,
+    .grid-table-foot {
+        border-left: $border-width solid $border-color;
+        border-right: $border-width solid $border-color;
+
+        &:first-child {
+            border-top: $border-width solid $border-color;
+            border-top-left-radius: $border-radius;
+            border-top-right-radius: $border-radius;
+        }
+
+        &:last-child {
+            border-bottom: $border-width solid $border-color;
+            border-bottom-left-radius: $border-radius;
+            border-bottom-right-radius: $border-radius;
+        }
+
+        & > .row {
+            margin: 0;
+            border-bottom: $border-width solid $border-color;
+
+            &:last-child {
+                margin-bottom: -1px;
+            }
+
+            & > * {
+                display: flex;
+                align-items: center;
+                text-align: left;
+                padding: $table-cell-padding;
+                flex-wrap: wrap;
+
+                &.col {
+                    overflow: auto;
+                }
+
+                &.text-center {
+                    justify-content: center;
+                    text-align: center;
+                }
+
+                &.text-right {
+                    justify-content: flex-end;
+                    text-align: right;
+                }
+            }
+        }
+
+        @each $color, $value in $theme-colors {
+            & > .row-#{$color} {
+                background-color: $value;
+                border-color: $value;
+                color: $white;
+                font-size: 1.1em;
+            }
+        }
+    }
+
+    &.grid-table-inline-edit {
+        .form-group {
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
+            margin-bottom: 0;
+        }
+
+        .col-form-label {
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .form-control {
+            margin: -0.3rem 0;
+
+            &:not(db-select2) {
+                padding: 0.3rem 0.5rem;
+            }
+        }
+
+        db-select2.form-control {
+            &,
+            & .select2-selection {
+                min-height: 0;
+                height: 2rem;
+            }
+
+            .select2-selection__rendered {
+                padding: 0.25rem 0.6rem;
+            }
+
+            .select2-selection__arrow {
+                width: 2rem;
+                height: 2rem;
+            }
+        }
+    }
+
+    &.grid-table-light {
+        .grid-table-head {
+            font-weight: bold;
+
+            &:after {
+                display: block;
+                content: '';
+                height: 1px;
+                background: linear-gradient(to right, theme-color('secondary'), theme-color('primary'));
+            }
+        }
+
+        .grid-table-foot:before {
+            display: block;
+            content: '';
+            height: 1px;
+            background: $gray-300;
+        }
+
+        .grid-table-head,
+        .grid-table-body,
+        .grid-table-foot {
+            background: none;
+            border: none;
+
+            & > .row {
+                border-bottom: none;
+            }
+        }
+    }
+
+    &.grid-table-bordered {
+        .grid-table-head,
+        .grid-table-body,
+        .grid-table-foot {
+            background: none;
+        }
+
+        .grid-table-body,
+        .grid-table-foot {
+            border: solid $card-border-width $card-border-color;
+        }
+
+        .grid-table-head {
+            border: none;
+            font-weight: bold;
+
+            &:after {
+                display: block;
+                content: '';
+                height: 1px;
+                background: linear-gradient(to right, theme-color('secondary'), theme-color('primary'));
+            }
+        }
+
+        .grid-table-foot {
+            border-top: none;
+
+            db-select2.form-control {
+                &,
+                & .select2-selection {
+                    min-height: 0;
+                    height: 2rem;
+                }
+
+                .select2-selection__rendered {
+                    padding: 0.25rem 0.6rem;
+                }
+
+                .select2-selection__arrow {
+                    width: 2rem;
+                    height: 2rem;
+                }
+            }
+        }
+    }
+
+    &.grid-table-striped {
+        .grid-table-body {
+            & > .row:nth-child(even) {
+                background-color: $gray-200;
+            }
+
+            & > .row:nth-child(odd) {
+                background-color: $gray-100;
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+.main-container {
+  margin-left: $main-nav-width;
+  min-height: 100%;
+}
+
+.content-container {
+  padding: 30px;
+
+  ng-component {
+    & > h1 {
+      color: $gray-700;
+      font-size: 2em;
+      margin: 40px 0;
+    }
+
+    & > h2 {
+      color: $gray-700;
+      font-size: 1.8em;
+      margin: 40px 0 20px 0;
+    }
+  }
+}

@@ -1,0 +1,91 @@
+<ul class="breadcrumbs">
+    <li><a [routerLink]="['/account/subscribers']">Subscribers</a></li>
+    <li>
+        <ng-container *ngIf="state.dataLoaded">{{data.subscriber.email}}</ng-container>
+        <i *ngIf="!state.dataLoaded" class="fas fa-circle-notch fa-spin"></i>
+    </li>
+</ul>
+
+<ng-container *ngIf="!state.dataLoaded">
+    <p class="text-center">
+        Loading...
+    </p>
+</ng-container>
+
+<ng-container *ngIf="state.dataLoaded">
+    <h1>{{data.subscriber.email}} - {{data.subscriber.name}}</h1>
+
+    <nav class="page-tools">
+        <a
+            class="btn btn-md btn-primary"
+            [routerLink]="['/account', 'subscribers', data.subscriber.id, 'edit']"
+        >
+            <i class="fas fa-pencil-alt"></i>
+            Edit Subscriber
+        </a>
+
+        <button
+            class="btn btn-md btn-danger"
+            [disabled]="state.deleting"
+            (click)="deleteSubscriber()"
+        >
+            <i
+                class="fas fa-fw"
+                [ngClass]="{
+                    'fa-trash-alt': !state.deleting,
+                    'fa-circle-notch fa-spin': state.deleting
+                }"
+            ></i>
+            Delete Subscriber
+        </button>
+    </nav>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-md-6 mt-2 mb-2">
+                    <strong>Group</strong><br>
+                    {{data.subscriber.subscriberGroupName}}
+                </div>
+
+                <div class="col-12 col-md-6 mt-2 mb-2">
+                    <strong>State</strong><br>
+                    {{data.subscriber.subscriberStateName}}
+                </div>
+
+                <div class="col-12 col-md-6 mt-2 mb-2">
+                    <strong>Created At</strong><br>
+                    {{data.subscriber.createdAt}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Subscriber Fields</h2>
+
+    <nav class="page-tools">
+        <a
+            class="btn btn-md btn-primary"
+            [routerLink]="['/account', 'subscribers', data.subscriber.id, 'edit-fields']"
+        >
+            <i class="fas fa-pencil-alt"></i>
+            Edit Subscriber Fields
+        </a>
+    </nav>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <ng-container *ngFor="let subscriberField of data.subscriber.subscriberFields">
+                    <div
+                        class="col-12 col-md-6 mt-2 mb-2"
+                        *ngIf="subscriberField.value"
+                    >
+                        <strong>{{subscriberField.field.title}}</strong><br>
+                        {{subscriberField.value}}
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</ng-container>

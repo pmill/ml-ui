@@ -1,0 +1,76 @@
+<ul class="breadcrumbs">
+    <li>Groups</li>
+</ul>
+
+<h1>Groups</h1>
+
+<nav class="page-tools">
+    <a
+        class="btn btn-md btn-primary"
+        [routerLink]="['/account', 'groups', 'create']"
+    >
+        <i class="fa fa-plus"></i>
+        Add Group
+    </a>
+</nav>
+
+<div class="card">
+    <div class="card-body">
+        <ng-container *ngIf="!state.initialised">
+            <p class="text-center">
+                Loading...
+            </p>
+        </ng-container>
+
+        <ng-container *ngIf="state.initialised">
+            <ng-container *ngIf="data.subscriberGroups.length > 0">
+                <div class="grid-table">
+                    <div class="grid-table-head bg-primary">
+                        <div class="row">
+                            <div class="col">
+                                Name
+                            </div>
+                            <div class="col-1 text-right">
+                                <div class="icon-group icon-group-sm">
+                                    <i
+                                        class="fas fa-users"
+                                    ></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-table-body" style="overflow:auto;">
+                        <div
+                            *ngFor="let subscriberGroup of data.subscriberGroups"
+                            class="row"
+                        >
+                            <div class="col">
+                                {{subscriberGroup.name}}
+                            </div>
+                            <div class="col-1 text-right">
+                                <div class="btn-group btn-group-round btn-group-sm">
+                                    <a
+                                        class="btn btn-info btn-sm btn-round"
+                                        [routerLink]="['/account/subscribers']"
+                                        [queryParams]="{subscriberGroup: subscriberGroup.id}">
+                                        <i class="fa fa-users"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-container *ngIf="data.subscriberGroups.length === 0">
+                <div class="text-center mt-5 mb-5">
+                    <p>
+                        <i class="fas fa-phone fa-6x"></i>
+                    </p>
+                    <h3 class="mb-4">You've not added any groups.</h3>
+                </div>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>

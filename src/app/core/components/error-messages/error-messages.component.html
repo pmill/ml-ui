@@ -1,0 +1,18 @@
+<ul
+    [hidden]="(_field === undefined) || !_field.invalid || _field.disabled || (!_field.dirty && !_field.touched)"
+    class="help-block"
+>
+    <ng-content></ng-content>
+
+    <error-message errorType="required">This field is required and cannot be empty.</error-message>
+    <error-message errorType="number">This field must be a number.</error-message>
+    <error-message errorType="min">The minimum number value been exceeded.</error-message>
+    <error-message errorType="max">The maximum number value has been exceeded.</error-message>
+    <error-message errorType="step">This numeric incremental step is not allowed.</error-message>
+    <error-message errorType="email">This field must be a valid email.</error-message>
+    <error-message errorType="url">This field must be a valid URL.</error-message>
+    <error-message errorType="minlength">This field is below the minimum length.</error-message>
+    <error-message errorType="maxlength">This field is above the maximum length.</error-message>
+    <error-message errorType="unique">This field must be unique.</error-message>
+    <error-message errorType="emailHost">This field requires a valid email address host.</error-message>
+</ul>

@@ -1,0 +1,81 @@
+<ul class="breadcrumbs">
+    <li><a [routerLink]="['/account', 'subscribers']">Subscribers</a></li>
+    <li>
+        <a
+            [routerLink]="['/account', 'subscribers', subscriberId]"
+            *ngIf="state.dataLoaded">
+            {{data.subscriber.email}}
+        </a>
+        <i
+            *ngIf="!state.dataLoaded"
+            class="fas fa-circle-notch fa-spin"
+        ></i>
+    </li>
+    <li>Edit Subscriber</li>
+</ul>
+
+<ng-container *ngIf="!state.dataLoaded">
+    <p class="text-center">
+        Loading...
+    </p>
+</ng-container>
+
+<ng-container *ngIf="state.dataLoaded">
+    <h1>Edit Subscriber Fields</h1>
+
+    <div class="card">
+        <div class="card-body">
+            <form
+                #form="ngForm"
+                (submit)="editSubscriberFields()"
+            >
+                <div
+                    class="form-group row"
+                    [showErrors]="subscriberFieldField"
+                    *ngFor="let subscriberField of data.subscriberFields"
+                >
+                    <label
+                        [for]="subscriberField.field.variable"
+                        class="col-12 col-sm-3 col-form-label"
+                    >
+                        {{subscriberField.field.title}}
+                    </label>
+
+                    <div class="col-12 col-sm-9">
+                        <input
+                            #subscriberFieldField="ngModel"
+                            [(ngModel)]="model.fields[subscriberField.id]"
+                            [id]="subscriberField.field.variable"
+                            [name]="subscriberField.field.variable"
+                            [type]="subscriberField.field.fieldType.inputType"
+                            [required]="subscriberField.field.required"
+                            maxlength="255"
+                            class="form-control"
+                        >
+
+                        <error-messages></error-messages>
+                    </div>
+                </div>
+
+                <div class="text-right">
+                    <a
+                        [routerLink]="['/account', 'subscribers', subscriberId]"
+                        class="mr-2"
+                    >
+                        Cancel
+                    </a>
+
+                    or
+
+                    <button
+                        type="submit"
+                        class="btn btn-lg btn-success ml-2"
+                        [disabled]="!form.valid || state.submitting"
+                    >
+                        Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-container>

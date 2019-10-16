@@ -1,0 +1,22 @@
+ul.breadcrumbs {
+  display: flex;
+  padding: 0;
+  
+  li {
+    display: inline;
+    color: $gray-600;
+
+    a {
+      color: black;
+    }
+
+    &:after {
+      content: '/';
+      padding: 0 10px;
+    }
+
+    &:last-child:after {
+      content: '';
+    }
+  }
+}

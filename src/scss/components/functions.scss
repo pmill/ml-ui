@@ -1,0 +1,7 @@
+@import "../variables";
+
+@import "~bootstrap/scss/variables";
+
+@function spacers($key) {
+    @return map-get($spacers, $key);
+}
